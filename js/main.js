@@ -85,19 +85,21 @@ document.addEventListener('keydown', function (ev) {
 
 
 function saveGameStatus() {
-	/* * * SESSION stuff * * */
+	// with SESSION
 	// sessionStorage.setItem('mazeSettings', JSON.stringify(mazeSettings, replacer));
 	// sessionStorage.setItem('player', JSON.stringify(player, replacer));
 	// console.log('saved player : ', JSON.stringify(player, replacer));
-	/* * * * * * * * * * * * */
 
-console.log('mazeSettings: ', JSON.stringify(mazeSettings));
-console.log('player: ', JSON.stringify(player));
 
-	/* * * COOKIES stuff * * */
+	// with COOKIES
 	setCookie('mazeSettings', JSON.stringify(mazeSettings), 30);
 	setCookie('player', JSON.stringify(player), 30);
-	/* * * * * * * * * * * * */
+
+
+
+
+
+
 	alert('Saved');
 }
 function eraseGameStatus() {
@@ -330,15 +332,15 @@ function addMessage(text, status) {
   \___ \ / _` \ \ / / _ \/ __|
   ____) | (_| |\ V /  __/\__ \
  |_____/ \__,_| \_/ \___||___/
-= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 
-/* Save Reminder */
-var showSaveReminder = setInterval(function () {
-	$('#dont-forget-to-save').toggleClass('is-showing');
-	setTimeout(function () {
-		$('#dont-forget-to-save').toggleClass('is-showing');
-	}, 1500);
-}, 20000);
+ /* Save Reminder */
+ var showSaveReminder = setInterval(function () {
+ 	$('#dont-forget-to-save').toggleClass('is-showing');
+ 	setTimeout(function () {
+ 		$('#dont-forget-to-save').toggleClass('is-showing');
+ 	}, 1500);
+ }, 20000);
 
 /* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */   
