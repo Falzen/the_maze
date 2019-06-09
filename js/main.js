@@ -84,19 +84,44 @@ document.addEventListener('keydown', function (ev) {
 });
 
 
-$(saveBtn).click(function (ev) {
-	sessionStorage.setItem('mazeSettings', JSON.stringify(mazeSettings, replacer));
-	sessionStorage.setItem('player', JSON.stringify(player, replacer));
-	console.log('saved player : ', JSON.stringify(player, replacer));
+function saveGameStatus() {
+	/* * * SESSION stuff * * */
+	// sessionStorage.setItem('mazeSettings', JSON.stringify(mazeSettings, replacer));
+	// sessionStorage.setItem('player', JSON.stringify(player, replacer));
+	// console.log('saved player : ', JSON.stringify(player, replacer));
+	/* * * * * * * * * * * * */
+
+console.log('mazeSettings: ', JSON.stringify(mazeSettings));
+console.log('player: ', JSON.stringify(player));
+
+	/* * * COOKIES stuff * * */
+	setCookie('mazeSettings', JSON.stringify(mazeSettings), 30);
+	setCookie('player', JSON.stringify(player), 30);
+	/* * * * * * * * * * * * */
 	alert('Saved');
+}
+function eraseGameStatus() {
+	/* * * SESSION stuff * * */
+	// sessionStorage.removeItem('mazeSettings');
+	// sessionStorage.removeItem('player');
+	// alert('Save erased');
+	/*sessionStorage.clear();*/
+	/* * * * * * * * * * * * */
+
+	/* * * COOKIES stuff * * */
+	eraseCookie('mazeSettings');
+	eraseCookie('player');
+	/* * * * * * * * * * * * */
+	window.location.href = "";
+
+}
+
+
+$(saveBtn).click(function (ev) {
+	saveGameStatus();
 });
 
 $(eraseBtn).click(function (ev) {
-	sessionStorage.removeItem('mazeSettings');
-	sessionStorage.removeItem('player');
-	/*sessionStorage.clear();*/
-	alert('Save erased');
-	window.location.href = "";
 });
 
 
@@ -324,7 +349,7 @@ var showSaveReminder = setInterval(function () {
 
 
 function init() {
-	if(continueFromSession) {
+	if(continueFromSavedStatus) {
 	}
 	else {
 		mazeSettings.visitedRooms.push(player.positions.startY + '-' + player.positions.startX);

@@ -8,30 +8,35 @@ console.log('JS loading: variable.js');
  | |___| (_) | (_) |   <| |  __/\__ \
   \_____\___/ \___/|_|\_\_|\___||___/
 
-= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 /**
 *
 */
 function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    return "";
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
 
 function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+debugger;
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function eraseCookie(name) {   
+  document.cookie = name+'=;expires=-99999999;';  
 }
 
 /* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -48,15 +53,15 @@ function setCookie(cname, cvalue, exdays) {
   \____/|_____/ \____/|_| \_|    |_| |_|\___|_| .__/ \___|_|   
                                               | |              
                                               |_|              
-= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+                                              = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 
 // Sérialize une fonction sans l'abimer
 var replacer = (key, value) => {  
   // if we get a function to serialize, gives the code for that function  
   if (typeof value === 'function') {
     return value.toString();  
-}   
-return value;
+  }   
+  return value;
 } 
 
 // Deserialize une fonction correctement
@@ -64,8 +69,8 @@ var reviver = (key, value) => {
   if (typeof value === 'string' && value.indexOf('function ') === 0) {
     var functionTemplate = eval('('+value+')');
     return functionTemplate;  
-}  
-return value;
+  }  
+  return value;
 } 
 
 
@@ -87,22 +92,35 @@ return value;
    | | | '_ \| | __| \ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|
   _| |_| | | | | |_   \ V / (_| | |  | | (_| | |_) | |  __/\__ \
  |_____|_| |_|_|\__|   \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
-= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 
-/* init variables */
-var isAdmin = false;
-var isFightning = false;
-var canDoAction = false;
-var mazeSettings;
-var player;
-debugger;
-var mazeSettings_FromSession = JSON.parse(sessionStorage.getItem('mazeSettings'), reviver);
-var player_FromSession = JSON.parse(sessionStorage.getItem('player'), reviver);
+ /* init variables */
+ var isAdmin = false;
+ var isFightning = false;
+ var canDoAction = false;
+ var mazeSettings;
+ var player;
 
-var continueFromSession = false;
-if(mazeSettings_FromSession != null && player_FromSession != null) {
-    continueFromSession = true;
+var mazeSettings_FromSavedStatus;
+var player_FromSavedStatus;
+var continueFromSavedStatus = false;
+ /* * * getting game status from SESSION * * */
+// mazeSettings_FromSavedStatus = JSON.parse(sessionStorage.getItem('mazeSettings'), reviver);
+// player_FromSavedStatus = JSON.parse(sessionStorage.getItem('player'), reviver);
+/* * * * * * * * * * * * * * * * * * * * * * */
+
+
+console.log('loading mazeSettings: ', getCookie('mazeSettings'));
+console.log('loading player: ', getCookie('player'));
+/* * * getting game status from COOKIES * * */
+if(getCookie('mazeSettings') && getCookie('player')) {
+  mazeSettings_FromSavedStatus = JSON.parse(getCookie('mazeSettings'));
+  player_FromSavedStatus = JSON.parse(getCookie('player'));
+  continueFromSavedStatus = true;
 }
+/* * * * * * * * * * * * * * * * * * * * * * */
+
+
 
 var ENEMY_SPAWN_RATE = 0.5;
 var theCurrentEnemy;
@@ -110,20 +128,20 @@ var theCurrentEnemy;
 
 var ALL_WEAPONS = [
 {
-    name: 'fists',
-    strength: 1,
-    description: 'Both fists.'
+  name: 'fists',
+  strength: 1,
+  description: 'Both fists.'
 },
 {
-    name: 'sword',
-    strength: 2.5,
-    description: 'An old, short sword.'
+  name: 'sword',
+  strength: 2.5,
+  description: 'An old, short sword.'
 }
 ];
 
 var mapWeaponByName = new Map();
 for(var i=0; i<ALL_WEAPONS.length; i++) {
-    mapWeaponByName.set(ALL_WEAPONS[i].name, ALL_WEAPONS[i]);
+  mapWeaponByName.set(ALL_WEAPONS[i].name, ALL_WEAPONS[i]);
 }
 console.log('mapWeaponByName : ', mapWeaponByName);
 
@@ -141,17 +159,17 @@ var someWalls_mazeSettings_h21_w21_inside = ["13-7", "13-13", "13-11", "13-9", "
 
 var theTable = document.getElementById('table');
 
-if (mazeSettings_FromSession != null) {
-    mazeSettings = mazeSettings_FromSession;
-    
+if (mazeSettings_FromSavedStatus != null) {
+  mazeSettings = mazeSettings_FromSavedStatus;
+
 } else {
-    mazeSettings = {
-        height: 21,
-        width: 21,
-        wallPositions: borderWalls.concat(someWalls_mazeSettings_h21_w21_outlines).concat(someWalls_mazeSettings_h21_w21_inside),
-        visitedRooms: [],
-        level: 1
-    }
+  mazeSettings = {
+    height: 21,
+    width: 21,
+    wallPositions: borderWalls.concat(someWalls_mazeSettings_h21_w21_outlines).concat(someWalls_mazeSettings_h21_w21_inside),
+    visitedRooms: [],
+    level: 1
+  }
 }
 
 
@@ -173,12 +191,12 @@ if (mazeSettings_FromSession != null) {
  |_____|_| |_|_|\__|  \__\__,_|_|  \__, |\___|\__|_|_| |_|\__, |
                                     __/ |                  __/ |
                                    |___/                  |___/ 
-= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+                                   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 
-var mazeOverlay = $('#mazeOverlay');
+                                   var mazeOverlay = $('#mazeOverlay');
 
-var saveBtn = $('#save-btn');
-var eraseBtn = $('#erase-btn');
+                                   var saveBtn = $('#save-btn');
+                                   var eraseBtn = $('#erase-btn');
 
 /* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
@@ -196,7 +214,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 function getRandomItemFromArray(items) {  
-    return items[Math.floor(Math.random()*items.length)];     
+  return items[Math.floor(Math.random()*items.length)];     
 }
 function sleep(milliseconds) {
   var start = new Date().getTime();

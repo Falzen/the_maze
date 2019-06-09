@@ -117,8 +117,8 @@ var PLAYER_DEFAULT_SETTINGS = {
   }
 }
 
-if (player_FromSession != null) {
-  player = player_FromSession;
+if (player_FromSavedStatus != null) {
+  player = player_FromSavedStatus;
 }
 else {
   player = new Player(PLAYER_DEFAULT_SETTINGS);
@@ -209,8 +209,6 @@ ALL_ENEMIES_TEMPLATES_BY_NAME.set(ENEMY_SETTINGS_dinofish.name.toLowerCase(), EN
   createEnemy(enemyData, standardLevel);
 }
 function createEnemy(enemyData, enemyLevel) {
-
-debugger;
 
   enemyName = enemyData.name.toLowerCase();
   if (ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName) == undefined) {

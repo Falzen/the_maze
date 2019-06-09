@@ -177,7 +177,6 @@ function hideCombatActions() {
 	fightingScene.actions.addClass('hide-actions').removeClass('show-actions');
 }
 function setEnemyImg() {
-	debugger;
 	fightingScene.enemyImg.attr('src', 'img/enemies/'+theCurrentEnemy.imgName);	
 }
 function unsetEnemyImg() {
