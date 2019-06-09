@@ -1,0 +1,383 @@
+body {
+	background-color: #2d2d2d;
+	margin: 0;
+}
+*, *>* {
+	box-sizing: border-box;
+}
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: block;	
+}
+
+header {
+	height: 55px;
+	background-color: black;
+	margin-bottom: 85px;
+	color: white;
+	position: relative;
+}
+header div.controls {
+	width: 100px;
+}
+header div.controls:hover ul {
+	display: block;
+
+}
+header ul {
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+header li {
+	margin: 0;
+}
+#header-content {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+}
+#header-content > * {
+	margin: 0 10px;
+}
+header #dont-forget-to-save {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 60px;
+	z-index: -1;
+	background: linear-gradient(darkorange 0%, transparent 75%);
+	transition: all 0.5s ease;
+}
+
+header #dont-forget-to-save.is-showing {
+	bottom: -60px;	
+}
+header #dont-forget-to-save h1 {
+	margin: 0;
+	font-size: 30px;
+	text-align: center;
+    line-height: 40px;
+	color: white;
+}
+header #hiddenAdminBtn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 55px;
+	height: 55px;
+	background: transparent;
+	transition: background 1s 0s ease;
+}
+header #hiddenAdminBtn:hover {
+	background: green;
+	transition: background 1s 1s ease;
+}
+
+section {
+	margin-bottom: 100px;
+	display:flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+#mazeOverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+.showOverlay {
+	opacity: 1 !important;
+}
+.hideOverlay {
+	opacity: 0 !important;
+}
+#enemy-stats-container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+#enemy-stats-content {
+	margin-top: 175px;
+	text-align: center;
+}
+#enemy-stats {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+}
+#stat-hp .label {
+	font-size: 12px;
+	color: grey;
+}
+#stat-hp .enemy-hp {
+	font-size: 15px;
+	color: white;
+}
+
+@keyframes enemyImgRotation {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(180deg);}
+}
+
+#enemyImg {
+	height: 60px;
+	width: 60px;
+	left: calc(50% - 30px);
+	top: calc(50% - 30px);
+	animation-name: enemyImgRotation;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+
+
+}
+article#maze-container {
+	position: relative;
+	margin: 0 5px;
+	border: 1px solid red;
+	padding: 12px;
+	box-shadow: 0 0 10px 3px black inset;
+}
+#story-content {
+	position: relative;
+	display: block;
+	min-width: 450px;
+	width: 100%;
+	height: 440px;
+	background-color: rgba(255,255,255,0.5);
+}
+
+ul#messages {
+	padding: 12px 7px;
+	height: 440px;
+	padding-bottom: 36px;
+	overflow-y: scroll;
+}
+
+ul#messages li {
+	color: white;
+	border-bottom: 1px solid grey;
+	padding-bottom: 12px;
+	margin-bottom: 12px;
+	opacity: 1 !important;
+	transition: opacity 0.5s ease;
+}
+
+ul#messages li:nth-child(even) {
+	background-color: rgba(220,200,220,0.3);
+}
+ul#messages li:nth-child(odd) {
+	background-color: rgba(220,200,220,0.6);
+}
+
+ul#messages p {
+	margin: 0;
+}
+ul#actions {
+	display: none;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 36px;
+	background-color: grey;
+	 user-select: none;
+}
+.hide-actions {
+	display: none;
+}
+.show-actions {
+	display: flex !important;
+}
+
+
+ul#actions li {
+	background-color: black;
+	color: white;
+	/* width: 90px; */
+	flex-grow: 1;	
+	text-align: center;
+	font-size: 8px;
+	line-height: 36px;
+	cursor: pointer;
+	transition: all 1s ease-out;
+}
+ul#actions li:not(:last-child) {
+	margin-right: 7px;
+}
+ul#actions li:hover {
+	color: green;
+}
+ul#actions li:active {
+	background-color: white;
+	color: black;
+	transition: all 0s ease;
+}
+
+li.enemyAction {
+	color: tomato;
+}
+
+
+li.victory p {
+	text-align: center; 
+	background-image: linear-gradient(red, green, blue);
+ 	color: transparent;
+ 	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+table {
+	border: 1px solid #000;
+	background-color: black;		
+	border-spacing: 1px;
+	min-width: 350px;
+	min-height: 380px;
+	/* border-spacing:0; */
+} 
+table tr:first-child td,
+table tr:last-child td,
+table tr td:first-child,
+table tr td:last-child {
+	height: 1px;
+	width: 1px;
+}
+td {
+	height: 18px;
+	width: 18px;
+	background-color: #cfcfcf;
+}
+.is-bold {
+	font-weight: bold;
+}
+.is-wall {
+	background-color: #000;
+}
+.is-visited {
+	background-color: #cfcfcf;
+}
+.is-new {
+	background-color: #a0a0a0;
+}
+.player-position {
+	background-color: #50cffc;
+}
+
+
+
+
+#maze-content,
+#actions-content {
+}
+
+article .controls,
+article .actions-buttons {
+	height: 35px;
+	background-color: rgba(60,60,60,1);
+}
+article .controls ul,
+article .actions-buttons ul {
+	list-style: none;
+	height: 100%;
+	padding: 0;
+	padding-top: 5px;
+	margin: 0;
+	color: white;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	width: 100%;
+}
+
+article .controls li,
+article .actions li {
+	text-align: center;
+	margin: 2px 5px;
+}
+#actions {
+	height: 353px;
+	overflow-x: hidden;
+}
+
+ul#text {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 367px;
+	padding: 05px 7px 5px;
+	list-style: none;
+	color: white;
+	background: linear-gradient(black, #3c3c3c);
+
+	overflow-y: scroll;
+
+}
+
+
+ul#text h1 {
+	text-align: center;
+	margin: 0
+	}

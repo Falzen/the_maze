@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<header>
+		<div id="header-container">
+			<div id="header-content">
+				<div class="controls">Controls
+					<ul>
+						<li>Z : up</li>
+						<li>Q : left</li>
+						<li>S : down</li>
+						<li>D : right</li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div id="save">
+					<button id="save-btn">Save</button>
+					<button id="erase-btn">Erase</button>
+				</div>
+			</div>
+		</div>
+		<div id="dont-forget-to-save">
+			<h1>N'oubliez pas de sauvegarder de temps en temps</h1>
+		</div>
+		<div id="hiddenAdminBtn"></div>
+	</header>
+
+
+
+	<section>
+		<article id="maze-container">
+			<div id="mazeOverlay">
+				<div id="enemy-stats-container">
+					<div id="enemy-stats-content">
+						<img id="enemyImg" src="" />
+						<div id="enemy-stats">
+							<div id="stat-hp">
+								<p class="label">Health</p>
+								<p class="enemy-hp"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="maze-content">
+				<table id="table"></table>
+			</div>
+			<div class="controls">
+				<ul>
+					<li><span class="is-bold">Z</span> : up</li>
+					<li><span class="is-bold">Q</span> : left</li>
+					<li><span class="is-bold">S</span> : down</li>
+					<li><span class="is-bold">D</span> : right</li>
+				</ul>
+			</div>
+		</article>
+
+		<article id="story-container">
+			
+			<div id="story-content">
+				<ul id="messages" >
+					<li>
+						<p>Welcome</p>
+					</li>
+
+				</ul>
+				<ul id="actions" class="hide-actions">
+					<li class="action-btn" data-action="attack">1: attack</li>
+					<li class="action-btn" data-action="defend">2: defend</li>
+					<li class="action-btn" data-action="object">3: object</li>
+					<li class="action-btn" data-action="run">4: run away</li>
+				</ul>
+			</div>
+		</article>
+
+	</section>
+
+
+
+	<footer>
+		<div class="admin-ui hide">
+			<button id="show-array">show</button>
+		</div>
+	</footer>
+
+
+
+	<script type="text/javascript" src="js/utils/jquery.js"></script>
+	<script type="text/javascript" src="js/variables.js"></script>
+	<script type="text/javascript" src="js/characters.js"></script>
+	<script type="text/javascript" src="js/objects.js"></script>
+	<script type="text/javascript" src="js/encounterManager.js"></script>
+	<script type="text/javascript" src="js/admin.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+
+	<script type="text/javascript">
+	init();	
+</script>
+
+</body>
+
+</html>
+
