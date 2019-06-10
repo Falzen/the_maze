@@ -1,4 +1,4 @@
-console.log('JS loading: encounterManager.js');
+
 
 var ENEMIES_BY_MAZE_LEVEL = new Map();
 
@@ -8,7 +8,7 @@ var ENEMIES_BY_MAZE_LEVEL = new Map();
  * @return returns a list of enemies which standard level is 'X'
  */
 function getEnemiesByStandardLevel(lvl) {
-	console.log('lvl : ', lvl);
+	
 	var enemyList = [];
 	ALL_ENEMIES_TEMPLATES_BY_NAME.forEach(function(oneEnemyTemplate) {
 		if (oneEnemyTemplate.level == lvl) {
@@ -28,33 +28,33 @@ ENEMIES_BY_MAZE_LEVEL.set(2, getEnemiesByStandardLevel(2));
 
 
 var startFight = function() {
-	console.log('F started');
+	
 	addMessage('F started');
 	// used for action availability: no movements during fights, new actions available, etc.
-	isFightning = true;
+	gamestats.isFightning = true;
 
 	// choose an enemy from the appropriate level list
-	var thisLevelEnemyList = ENEMIES_BY_MAZE_LEVEL.get(mazeSettings.level);
+	var thisLevelEnemyList = ENEMIES_BY_MAZE_LEVEL.get(gamestats.mazeSettings.level);
 
 	// instanciate the enemy (stats, level, etc.)
 	var randomEnemyData = getRandomItemFromArray(thisLevelEnemyList);
 
 	//set it to global variable
-	theCurrentEnemy = createEnemy(randomEnemyData);
+	gamestats.theCurrentEnemy = createEnemy(randomEnemyData);
 
 	setEnemyImg();
 	setEnemyStats();
 
 	// TODO announce the ennemy
-	console.log("%cCurrent Enemy", "color: tomato; font-size:15px;", theCurrentEnemy.name);	
-	console.log("%Enemy stats", "color: tomato;", theCurrentEnemy);
+	
+	
 
 	addMessage('What do you do?', 'choice');
 
 	setTimeout(showMazeOverlay, 200);
 	setTimeout(showCombatActions, 600);
 	// will forbid multiple actions in one turn
-	canDoAction = true;
+	gamestats.canDoAction = true;
 	//showCombatActions();
 
 }
@@ -77,29 +77,29 @@ var startFight = function() {
 
 function combatAttack() {	
 	// weapon used as a multiplier of strength
-	var damageFromPlayer = player.attack * mapWeaponByName.get(player.weaponName).strength;
+	var damageFromPlayer = gamestats.player.attack * mapWeaponByName.get(gamestats.player.weaponName).strength;
 	
 	// 20% of ignoring enemy's defense
-	var enemyProtection = theCurrentEnemy.defense;
+	var enemyProtection = gamestats.theCurrentEnemy.defense;
 	if(Math.random() > 0.8) {
 		enemyProtection = 0;
 	}
 
 	// final damages dealt
 	var damageDealt = damageFromPlayer - enemyProtection;
-	theCurrentEnemy.health -= damageDealt;
+	gamestats.theCurrentEnemy.health -= damageDealt;
 
 	// refresh the view
 	refreshEnemyStats();
 
 	// won the fight
-	if (theCurrentEnemy.health <= 0) {
-		theCurrentEnemy.health = 0;
+	if (gamestats.theCurrentEnemy.health <= 0) {
+		gamestats.theCurrentEnemy.health = 0;
 		endFight('victory');
 	}
 	// keep fighting
 	else {
-		addMessage('You hit '+ theCurrentEnemy.name + ' for ' + damageDealt + '.\n' + theCurrentEnemy.name + ' has ' + theCurrentEnemy.health + 'hp left.');	
+		addMessage('You hit '+ gamestats.theCurrentEnemy.name + ' for ' + damageDealt + '.\n' + gamestats.theCurrentEnemy.name + ' has ' + gamestats.theCurrentEnemy.health + 'hp left.');	
 		combatEnemyTurn('combatAttack');
 	}
 }
@@ -124,8 +124,8 @@ function endFight(outcome) {
 		msg += '* * *     V I C T O R Y !!     * * *<br/>';
 		msg += '* * * * * * * * * * * * * * * * * *<br/>';
 			addMessage(msg, 'victory');
-			isFightning = false;
-			theCurrentEnemy = null;
+			gamestats.isFightning = false;
+			gamestats.theCurrentEnemy = null;
 		break;
 	}
 	unsetEnemyImg();	
@@ -141,10 +141,10 @@ function endFight(outcome) {
 	'run'
 */
 function combatEnemyTurn(playerActionLastTurn) {	
-	addMessage(theCurrentEnemy.name + ' says hello.', 'enemyAction');
+	addMessage(gamestats.theCurrentEnemy.name + ' says hello.', 'enemyAction');
 
 	// allows player to do battle again	
-	canDoAction = true;
+	gamestats.canDoAction = true;
 }
 
 
@@ -177,13 +177,13 @@ function hideCombatActions() {
 	fightingScene.actions.addClass('hide-actions').removeClass('show-actions');
 }
 function setEnemyImg() {
-	fightingScene.enemyImg.attr('src', 'img/enemies/'+theCurrentEnemy.imgName);	
+	fightingScene.enemyImg.attr('src', 'img/enemies/'+gamestats.theCurrentEnemy.imgName);	
 }
 function unsetEnemyImg() {
 	fightingScene.enemyImg.attr('src', '');	
 }
 function setEnemyStats() {
-	$('.enemy-hp').text(theCurrentEnemy.health);
+	$('.enemy-hp').text(gamestats.theCurrentEnemy.health);
 }
 function refreshEnemyStats() {
 	setEnemyStats();
@@ -201,5 +201,5 @@ function hideMazeOverlay() {
 
 
 
-console.log('JS loaded: encounterManager.js');
+
 

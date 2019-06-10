@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 });
-console.log('JS loading: main.js');
+
 /*
 Enregistrer des données dans sessionStorage
 sessionStorage.setItem('clé', 'valeur');
@@ -26,13 +26,13 @@ testament2501
 
 /* toggle admin ui and activate methods on top right hidden area doubleclick */
 document.getElementById('hiddenAdminBtn').addEventListener('dblclick', function () {
-	console.log('test');
-	isAdmin = !isAdmin;
-	console.log('isAdmin: ', isAdmin);
+	
+	gamestats.isAdmin = !gamestats.isAdmin;
+	
 	refreshAdminUi();
 });
 function refreshAdminUi() {
-	if (isAdmin) {
+	if (gamestats.isAdmin) {
 		$('.admin-ui').addClass('show');
 	}
 	else {
@@ -43,29 +43,29 @@ function refreshAdminUi() {
 
 
 document.addEventListener('keydown', function (ev) {
-	console.log('ev.key = ', ev.key);
+	console.log('moving');
 	// can move if NOT fighting
-	if(!isFightning) {
+	if(!gamestats.isFightning) {
 		switch (ev.key) {
 			case 'z':
-			player.move('up');
+			gamestats.player.move('up');
 			break;
 
 			case 'd':
-			player.move('right');
+			gamestats.player.move('right');
 			break;
 
 			case 's':
-			player.move('down');
+			gamestats.player.move('down');
 			break;
 
 			case 'q':
-			player.move('left');
+			gamestats.player.move('left');
 			break;
 		}
 	}
 	/* is fighting */
-	else if (isFightning && canDoAction){
+	else if (gamestats.isFightning && gamestats.canDoAction){
 		switch(ev.key) {
 			case '1':
 			combatAttack();			
@@ -86,25 +86,20 @@ document.addEventListener('keydown', function (ev) {
 
 function saveGameStatus() {
 	// with SESSION
-	// sessionStorage.setItem('mazeSettings', JSON.stringify(mazeSettings, replacer));
+	// sessionStorage.setItem('gamestats.mazeSettings', JSON.stringify(gamestats.mazeSettings, replacer));
 	// sessionStorage.setItem('player', JSON.stringify(player, replacer));
-	// console.log('saved player : ', JSON.stringify(player, replacer));
+	
 
 
 	// with COOKIES
-	setCookie('mazeSettings', JSON.stringify(mazeSettings), 30);
-	setCookie('player', JSON.stringify(player), 30);
+	var jsonGamestats = JSON.stringify(gamestats);
+	setCookie('gamestats', JSON.stringify(gamestats), 30);
 
-
-
-
-
-
-	alert('Saved');
+	console.log('Saved');
 }
 function eraseGameStatus() {
 	/* * * SESSION stuff * * */
-	// sessionStorage.removeItem('mazeSettings');
+	// sessionStorage.removeItem('gamestats.mazeSettings');
 	// sessionStorage.removeItem('player');
 	// alert('Save erased');
 	/*sessionStorage.clear();*/
@@ -129,12 +124,12 @@ $(eraseBtn).click(function (ev) {
 
 
 $(document).on('click', '.action-btn', function() {
-	if(isFightning) {
+	if(gamestats.isFightning) {
 		var action = this.dataset.action;
-		console.log('clicked action : ', action);
-		console.log('canDoAction : ', canDoAction);
+		
+		
 		// prevents multiple actions in onr turn
-		if(canDoAction) {
+		if(gamestats.canDoAction) {
 			switch(action) {
 				case 'attack':
 				combatAttack();				
@@ -176,25 +171,25 @@ $(document).on('click', '.action-btn', function() {
  	var isRoomCreated = false;
 
  	/* if wall */
- 	if (!isRoomCreated && mazeSettings.wallPositions.indexOf(coordY + '-' + coordX) != -1) {
+ 	if (!isRoomCreated && gamestats.mazeSettings.wallPositions.indexOf(coordY + '-' + coordX) != -1) {
  		updatedMaze += '<td id="td__' + coordY + '-' + coordX + '" class="is-wall" data-coords=""></td>';
  		isRoomCreated = true;
  	}
 
  	/* normal new room */
- 	if (!isRoomCreated && mazeSettings.visitedRooms.indexOf(coordY + '-' + coordX) == -1) {
+ 	if (!isRoomCreated && gamestats.mazeSettings.visitedRooms.indexOf(coordY + '-' + coordX) == -1) {
  		updatedMaze += '<td id="td__' + coordY + '-' + coordX + '"  class="is-new" data-coords="' + coordY + '-' + coordX + '"></td>';
  		isRoomCreated = true;
  	}
 
  	/* player position */
- 	if (!isRoomCreated && coordY == player.positions.currentY && coordX == player.positions.currentX) {
+ 	if (!isRoomCreated && coordY == gamestats.player.positions.currentY && coordX == gamestats.player.positions.currentX) {
  		updatedMaze += '<td id="td__' + coordY + '-' + coordX + '" class="player-position" data-coords=""></td>';
  		isRoomCreated = true;
  	}
 
  	/* normal visited room */
- 	if (!isRoomCreated && mazeSettings.visitedRooms.indexOf(coordY + '-' + coordX) != -1) {
+ 	if (!isRoomCreated && gamestats.mazeSettings.visitedRooms.indexOf(coordY + '-' + coordX) != -1) {
  		updatedMaze += '<td id="td__' + coordY + '-' + coordX + '" class="is-visited" data-coords=""></td>';
  		isRoomCreated = true;
  	}
@@ -205,13 +200,13 @@ $(document).on('click', '.action-btn', function() {
 
 /**
  * Create the maze and inserts it into the DOM
- * Uses the static 'mazeSettings'
+ * Uses the static 'gamestats.mazeSettings'
  */
  function drawMap() {
  	var updatedMaze = '';
- 	for (var y = 0; y < mazeSettings.height; y++) {
+ 	for (var y = 0; y < gamestats.mazeSettings.height; y++) {
  		updatedMaze += '<tr class="row__' + y + '">';
- 		for (var x = 0; x < mazeSettings.width; x++) {
+ 		for (var x = 0; x < gamestats.mazeSettings.width; x++) {
  			/* player position */
  			updatedMaze = buildRoom(y, x, updatedMaze);
  		}
@@ -238,7 +233,7 @@ $(document).on('click', '.action-btn', function() {
 
 
  	/* à la fin : ajoute la nouvelle room à la liste des visitées */
- 	mazeSettings.visitedRooms.push(coords);
+ 	gamestats.mazeSettings.visitedRooms.push(coords);
  }
 
 
@@ -261,7 +256,7 @@ $(document).on('click', '.action-btn', function() {
  * @return boolean
  */
  function isNewRoom(coords) {
- 	return mazeSettings.visitedRooms.indexOf(coords) == -1;
+ 	return gamestats.mazeSettings.visitedRooms.indexOf(coords) == -1;
  }
 
 /**
@@ -297,7 +292,7 @@ Sets player's current room
 Note: updates the the maze itself (<td>)
 */
 function drawPlayerPosition() {
-	var newPlayerPosition = $("td#td__" + player.positions.currentY + "-" + player.positions.currentX);
+	var newPlayerPosition = $("td#td__" + gamestats.player.positions.currentY + "-" + gamestats.player.positions.currentX);
 	//$(newPlayerPosition).attr('class', 'player-position');
 	if (!$(newPlayerPosition).hasClass('is-wall')) {
 		$(newPlayerPosition).removeClass('is-visited').addClass('player-position');	
@@ -351,10 +346,8 @@ function addMessage(text, status) {
 
 
 function init() {
-	if(continueFromSavedStatus) {
-	}
-	else {
-		mazeSettings.visitedRooms.push(player.positions.startY + '-' + player.positions.startX);
+	if(!gamestats.continueFromSavedStatus) {
+		gamestats.mazeSettings.visitedRooms.push(gamestats.player.positions.startY + '-' + gamestats.player.positions.startX);
 	}
 	
 	drawMap();
@@ -362,4 +355,3 @@ function init() {
 
 
 
-console.log('JS loaded: main.js');

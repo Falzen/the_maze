@@ -1,5 +1,5 @@
 
-console.log('JS loading: character.js');
+
 //http://shrines.rpgclassics.com/snes/som/enemiesf.shtml
 
 
@@ -48,30 +48,30 @@ var PLAYER_DEFAULT_SETTINGS = {
     var nextCoord = '';
     switch (dir) {
       case 'up':
-      nextCoord = 1 * (player.positions.currentY - 1) + '-' + player.positions.currentX;
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentY--;
+      nextCoord = 1 * (gamestats.player.positions.currentY - 1) + '-' + gamestats.player.positions.currentX;
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentY -= 1;
       }
       break;
 
       case 'right':
-      nextCoord = player.positions.currentY + '-' +  (1 * player.positions.currentX + 1);
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentX++;
+      nextCoord = gamestats.player.positions.currentY + '-' +  (1 * gamestats.player.positions.currentX + 1);
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentX += 1;
       }
       break;
 
       case 'down':
-      nextCoord = 1 * (player.positions.currentY + 1) + '-' + player.positions.currentX;
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentY++;
+      nextCoord = 1 * (gamestats.player.positions.currentY + 1) + '-' + gamestats.player.positions.currentX;
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentY += 1;
       }
       break;
 
       case 'left':
-      nextCoord = player.positions.currentY + '-' + (1 * player.positions.currentX - 1);
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentX--;
+      nextCoord = gamestats.player.positions.currentY + '-' + (1 * gamestats.player.positions.currentX - 1);
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentX -= 1;
       }
       break;
     }
@@ -79,49 +79,49 @@ var PLAYER_DEFAULT_SETTINGS = {
     enterRoom(nextCoord);
     /*
     if (dir == 'up') {
-      nextCoord = 1 * (player.positions.currentY - 1) + '-' + player.positions.currentX;
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentY--;
+      nextCoord = 1 * (gamestats.player.positions.currentY - 1) + '-' + gamestats.player.positions.currentX;
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentY--;
       }
     }
     else if (dir == 'right') {
-      nextCoord = player.positions.currentY + '-' +  (1 * player.positions.currentX + 1);
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentX++;
+      nextCoord = gamestats.player.positions.currentY + '-' +  (1 * gamestats.player.positions.currentX + 1);
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentX++;
       }
     }
     else if (dir == 'down') {
-      nextCoord = 1 * (player.positions.currentY + 1) + '-' + player.positions.currentX;
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentY++;
+      nextCoord = 1 * (gamestats.player.positions.currentY + 1) + '-' + gamestats.player.positions.currentX;
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentY++;
       }
     }
     else if (dir == 'left') {
-      nextCoord = player.positions.currentY + '-' + (1 * player.positions.currentX - 1);
-      if (mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        player.positions.currentX--;
+      nextCoord = gamestats.player.positions.currentY + '-' + (1 * gamestats.player.positions.currentX - 1);
+      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
+        gamestats.player.positions.currentX--;
       }
     }
     enterRoom(nextCoord);
     */
   },
   this.positions = {
-    startY: mazeSettings.height - 2,
-    startX: Math.floor(mazeSettings.width / 2),
+    startY: gamestats.mazeSettings.height - 2,
+    startX: Math.floor(gamestats.mazeSettings.width / 2),
     nextY: 0,
     nextX: 0,
-    currentY: mazeSettings.height - 2,
-    currentX: Math.floor(mazeSettings.width / 2),
+    currentY: gamestats.mazeSettings.height - 2,
+    currentX: Math.floor(gamestats.mazeSettings.width / 2),
     lastY: 0,
     lastX: 0
   }
 }
 
-if (player_FromSavedStatus != null) {
-  player = player_FromSavedStatus;
+if (gamestats.player_FromSavedStatus != null) {
+  gamestats.player = gamestats.player_FromSavedStatus;
 }
 else {
-  player = new Player(PLAYER_DEFAULT_SETTINGS);
+  gamestats.player = new Player(PLAYER_DEFAULT_SETTINGS);
 }
 
 
@@ -235,5 +235,5 @@ function createEnemy(enemyData, enemyLevel) {
 
 
 
-console.log('JS loaded: character.js');
+
 

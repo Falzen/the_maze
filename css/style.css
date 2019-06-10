@@ -16,7 +16,25 @@ ul {
 .show {
 	display: block;	
 }
+.wonAfight {position: relative;}
+.wonAfight::before,
+.wonAfight::after {
+	content: "";
+	display: block;
+	position: absolute;
+    top: 8px;
+    left: 2px;
+    width: 14px;
+    height: 1px;
+	background-color: red;
+	transform: rotate(45deg);
+}
+.wonAfight::after {
+	left: unset;
+	right: 2px;
+	transform: rotate(-45deg);
 
+}
 header {
 	height: 55px;
 	background-color: black;
