@@ -330,12 +330,12 @@ function addMessage(text, status) {
  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */
 
  /* Save Reminder */
- var showSaveReminder = setInterval(function () {
+ /*var showSaveReminder = setInterval(function () {
  	$('#dont-forget-to-save').toggleClass('is-showing');
  	setTimeout(function () {
  		$('#dont-forget-to-save').toggleClass('is-showing');
  	}, 1500);
- }, 20000);
+ }, 20000);*/
 
 /* = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = */   

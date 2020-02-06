@@ -15,9 +15,9 @@ var PLAYER_DEFAULT_SETTINGS = {
 }
 
 /**
- * Implémentée par Player et Enemy
- */
- var Character_Template = function(settings) {
+* Implémentée par Player et Enemy
+*/
+var Character_Template = function(settings) {
   this.name = settings.name;
   this.level = settings.level;
   this.maxHealth = settings.maxHealth;
@@ -28,23 +28,23 @@ var PLAYER_DEFAULT_SETTINGS = {
 
 
 /**
- * Une seule instanciation
- * @param {string} name
- * @param {integer} level
- * @param {integer} maxHealth
- * @param {integer} health
- * @param {integer} attack
- * @param {integer} defense
- * @param {string} weaponName
- * @param {string} armorName
- */
- var Player = function(settings) {
- 	Character_Template.call(this, settings);
- 	this.currentXP = 0;
- 	this.weaponName = settings.weaponName;
- 	this.armorName = settings.armorName;
- 	this.nextLevelsList = [];
- 	this.move = function (dir) {
+* Une seule instanciation
+* @param {string} name
+* @param {integer} level
+* @param {integer} maxHealth
+* @param {integer} health
+* @param {integer} attack
+* @param {integer} defense
+* @param {string} weaponName
+* @param {string} armorName
+*/
+var Player = function(settings) {
+  Character_Template.call(this, settings);
+  this.currentXP = 0;
+  this.weaponName = settings.weaponName;
+  this.armorName = settings.armorName;
+  this.nextLevelsList = [];
+  this.move = function (dir) {
     var nextCoord = '';
     switch (dir) {
       case 'up':
@@ -77,33 +77,6 @@ var PLAYER_DEFAULT_SETTINGS = {
     }
 
     enterRoom(nextCoord);
-    /*
-    if (dir == 'up') {
-      nextCoord = 1 * (gamestats.player.positions.currentY - 1) + '-' + gamestats.player.positions.currentX;
-      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        gamestats.player.positions.currentY--;
-      }
-    }
-    else if (dir == 'right') {
-      nextCoord = gamestats.player.positions.currentY + '-' +  (1 * gamestats.player.positions.currentX + 1);
-      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        gamestats.player.positions.currentX++;
-      }
-    }
-    else if (dir == 'down') {
-      nextCoord = 1 * (gamestats.player.positions.currentY + 1) + '-' + gamestats.player.positions.currentX;
-      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        gamestats.player.positions.currentY++;
-      }
-    }
-    else if (dir == 'left') {
-      nextCoord = gamestats.player.positions.currentY + '-' + (1 * gamestats.player.positions.currentX - 1);
-      if (gamestats.mazeSettings.wallPositions.indexOf(nextCoord) == -1) {
-        gamestats.player.positions.currentX--;
-      }
-    }
-    enterRoom(nextCoord);
-    */
   },
   this.positions = {
     startY: gamestats.mazeSettings.height - 2,
@@ -128,64 +101,92 @@ else {
 
 
 /**
- * Modèle pour Enemies
- * @param {string} name
- * @param {integer} level
- * @param {integer} maxHealth
- * @param {integer} health
- * @param {integer} attack
- * @param {integer} defense
- * @param {integer} givenXP
- * @param {items[]} possibleDrops
- * @param {integer} spawnRate
- * @param {string} imgName
- */
- var Enemy = function(settings) {
- 	Character_Template.call(this, settings);
- 	this.givenXP = settings.givenXP;
- 	this.possibleDrops = settings.possibleDrops;
- 	this.spawnRate = settings.spawnRate;
- 	this.imgName = settings.imgName;
- }
+* Modèle pour Enemies
+* @param {string} name
+* @param {integer} level
+* @param {integer} maxHealth
+* @param {integer} health
+* @param {integer} attack
+* @param {integer} defense
+* @param {integer} givenXP
+* @param {items[]} possibleDrops
+* @param {integer} spawnRate
+* @param {string} imgName
+*/
+var Enemy = function(settings) {
+  Character_Template.call(this, settings);
+  this.givenXP = settings.givenXP;
+  this.possibleDrops = settings.possibleDrops;
+  this.spawnRate = settings.spawnRate;
+  this.imgName = settings.imgName;
+  this.skillUsingRate = settings.skillUsingRate;
+  this.skills = settings.skills;
+}
 
 
- /* tous les ennemies */ 
- var ENEMY_SETTINGS_rabite = {
- 	'name' : "rabite",
- 	'level' : 1,
- 	'maxHealth' : 22,
- 	'health' : 22,
- 	'attack' : 8,
- 	'defense' : 1,
- 	'givenXP' : 10,
- 	'possibleDrops' : [],
- 	'spawnRate' : 75,
- 	'imgName' : "rabite.gif"
- }
- var ENEMY_SETTINGS_beastzombie = {
- 	'name' : "beastzombie",
- 	'level' : 1,
- 	'maxHealth' : 22,
- 	'health' : 22,
- 	'attack' : 8,
- 	'defense' : 1,
- 	'givenXP' : 10,
- 	'possibleDrops' : [],
- 	'spawnRate' : 75,
- 	'imgName' : "beastzombie.gif"
- }
- var ENEMY_SETTINGS_dinofish = {
- 	'name' : "dinofish",
- 	'level' : 1,
- 	'maxHealth' : 22,
- 	'health' : 22,
- 	'attack' : 8,
- 	'defense' : 1,
- 	'givenXP' : 10,
- 	'possibleDrops' : [],
- 	'spawnRate' : 75,
- 	'imgName' : "dinofish.gif"
- }
+/* tous les ennemies */ 
+var ENEMY_SETTINGS_rabite = {
+  'name' : "rabite",
+  'level' : 1,
+  'maxHealth' : 22,
+  'health' : 22,
+  'attack' : 8,
+  'defense' : 1,
+  'givenXP' : 10,
+  'possibleDrops' : [],
+  'spawnRate' : 75,
+  'imgName' : "rabite.gif",
+  'skillUsingRate': 0.5,//TODO correct 0.2
+  'skills' : [
+    {
+      'id': 1,
+      'triggerRate': 0.5
+    }
+  ]
+  
+}
+var ENEMY_SETTINGS_beastzombie = {
+  'name' : "beastzombie",
+  'level' : 1,
+  'maxHealth' : 22,
+  'health' : 22,
+  'attack' : 8,
+  'defense' : 1,
+  'givenXP' : 10,
+  'possibleDrops' : [],
+  'spawnRate' : 75,
+  'imgName' : "beastzombie.gif",
+  'skillUsingRate': 0.5,//TODO correct 0.2
+  'skills' : [
+    {
+    'id': 2,
+    'triggerRate': 0.5
+    }
+  ]
+}
+var ENEMY_SETTINGS_dinofish = {
+  'name' : "dinofish",
+  'level' : 1,
+  'maxHealth' : 22,
+  'health' : 22,
+  'attack' : 8,
+  'defense' : 1,
+  'givenXP' : 10,
+  'possibleDrops' : [],
+  'spawnRate' : 75,
+  'imgName' : "dinofish.gif",
+  'skillUsingRate': 0.5,//TODO correct 0.2
+  'skills' : [
+    {
+    'id': 1,
+    'triggerRate': 0.5
+    },
+    {
+    'id': 2,
+    'triggerRate': 0.2
+    }
+  ]
+}
 
 /* 
 alimenter cette Map avec les nouveaux ennemies,
@@ -198,35 +199,51 @@ ALL_ENEMIES_TEMPLATES_BY_NAME.set(ENEMY_SETTINGS_beastzombie.name.toLowerCase(),
 ALL_ENEMIES_TEMPLATES_BY_NAME.set(ENEMY_SETTINGS_dinofish.name.toLowerCase(), ENEMY_SETTINGS_dinofish);
 
 /**
- * Enemy Factory
- * @param {string} enemyName
- * @return {Enemy} || {string} : message d'erreur
- * prend les infos dans la Map ALL_ENEMIES_TEMPLATES_BY_NAME avec le nom reçu
- */
+* Enemy Factory
+* @param {string} enemyName
+* @return {Enemy} || {string} : message d'erreur
+* prend les infos dans la Map ALL_ENEMIES_TEMPLATES_BY_NAME avec le nom reçu
+*/
 
- function createEnemy(enemyData) {
+function createEnemy(enemyData) {
   var standardLevel = ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).level;
   createEnemy(enemyData, standardLevel);
 }
 function createEnemy(enemyData, enemyLevel) {
 
   enemyName = enemyData.name.toLowerCase();
-  if (ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName) == undefined) {
-   return 'No enemy by that name : "' + enemyName + '" in ALL_ENEMIES_TEMPLATES_BY_NAME.';
- }
+  enemyTemplate = ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName);
+  if (enemyTemplate == undefined) {
+    return 'No enemy by that name : "' + enemyName + '" in ALL_ENEMIES_TEMPLATES_BY_NAME.';
+  }
 
- return new Enemy({
-   'name' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).name,
-   'level' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).level,
-   'maxHealth' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).maxHealth,
-   'health' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).health,
-   'attack' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).attack,
-   'defense' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).defense,
-   'givenXP' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).givenXP,
-   'possibleDrops' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).possibleDrops,
-   'spawnRate' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).spawnRate,
-   'imgName' : ALL_ENEMIES_TEMPLATES_BY_NAME.get(enemyName).imgName
-   });
+  $('#enemyLife').css('width', ((enemyTemplate.health*100) / enemyTemplate.maxHealth) + '%');
+
+  var skillsList = [];
+  for(var i=0; i<enemyTemplate.skills.length; i++) {
+    var oneSkill = getSkillById(enemyTemplate.skills[i].id);
+    oneSkill.triggerRate = enemyTemplate.skills[i].triggerRate;
+    skillsList.push(oneSkill);
+  }
+
+
+
+  var temp =  new Enemy({
+    'name' : enemyTemplate.name,
+    'level' : enemyTemplate.level,
+    'maxHealth' : enemyTemplate.maxHealth,
+    'health' : enemyTemplate.health,
+    'attack' : enemyTemplate.attack,
+    'defense' : enemyTemplate.defense,
+    'givenXP' : enemyTemplate.givenXP,
+    'possibleDrops' : enemyTemplate.possibleDrops,
+    'spawnRate' : enemyTemplate.spawnRate,
+    'imgName' : enemyTemplate.imgName,
+    'skillUsingRate': enemyTemplate.skillUsingRate,
+    'skills': skillsList
+  });
+
+  return temp;
 }
 
 

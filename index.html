@@ -43,13 +43,30 @@
 	<section>
 		<article id="maze-container">
 			<div id="mazeOverlay">
-				<div id="enemy-stats-container">
-					<div id="enemy-stats-content">
+				<div id="enemy-stats-container" class="stats-container">
+					<div id="enemy-stats-content" class="stats-content">
 						<img id="enemyImg" src="" />
-						<div id="enemy-stats">
+						<div id="enemy-stats" class="stats">
 							<div id="stat-hp">
 								<p class="label">Health</p>
-								<p class="enemy-hp"></p>
+								<p class="enemy-hp hp"></p>
+								<div id="enemyLifebar" class="lifebar-outter"> 
+									<div id="enemyLife" class="lifebar-inner"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="player-stats-container" class="stats-container">
+					<div id="player-stats-content" class="stats-content">
+						<img id="playerImg" src="img/enemies/beastzombie.gif" />
+						<div id="player-stats" class="stats">
+							<div id="stat-hp">
+								<p class="label">Health</p>
+								<p class="player-hp hp"></p>
+								<div id="playerLifebar" class="lifebar-outter">
+									<div id="playerLife" class="lifebar-inner"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -101,6 +118,7 @@
 	<script type="text/javascript" src="js/utils/jquery.js"></script>
 	<script type="text/javascript" src="js/variables.js"></script>
 	<script type="text/javascript" src="js/characters.js"></script>
+	<script type="text/javascript" src="js/fightingSkills.js"></script>
 	<script type="text/javascript" src="js/objects.js"></script>
 	<script type="text/javascript" src="js/encounterManager.js"></script>
 	<script type="text/javascript" src="js/admin.js"></script>
